@@ -14,7 +14,7 @@ import it.epicode.be.prenotazioni.repository.PostazioneRepository;
 
 @SpringBootTest
 class PostazioneTests {
-	
+
 	@Autowired
 	PostazioneRepository postazioneRepository;
 
@@ -22,19 +22,19 @@ class PostazioneTests {
 	void contextLoads() {
 		assertNotNull(postazioneRepository);
 	}
-	
+
 	@Test
-	void testFindLiberoByCitta(){
+	void testFindLiberoByCitta() {
 		Citta citta = null;
-		postazioneRepository.findLibereByCitta(citta, TipoPostazione.OPENSPACE, LocalDate.now(), null);
-		
+		postazioneRepository.findLibereByCitta(citta, TipoPostazione.OPENSPACE, LocalDate.now());
+
 	}
-	
+
 	@Test
-	void testFindByCittaAndDate(){
+	void testFindByCittaAndDate() {
 		Citta citta = null;
-		postazioneRepository.findByEdificioCittaAndTipo(citta, TipoPostazione.OPENSPACE, null);
-		
+		postazioneRepository.findByEdificioCittaAndTipo(citta, TipoPostazione.OPENSPACE);
+
 	}
 
 }

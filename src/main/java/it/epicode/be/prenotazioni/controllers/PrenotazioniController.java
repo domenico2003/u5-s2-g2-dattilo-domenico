@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -12,13 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.epicode.be.prenotazioni.exceptions.LanguageException;
 import it.epicode.be.prenotazioni.model.Postazione;
-import it.epicode.be.prenotazioni.service.PrenotazioniService;
+import it.epicode.be.prenotazioni.model.Prenotazione;
+import it.epicode.be.prenotazioni.payloads.PrenotazionePayload;
+import it.epicode.be.prenotazioni.service.GeneralService;
 
 @RestController
-@RequestMapping("/esercizi")
-public class UserController {
+@RequestMapping("/prenotazioni")
+public class PrenotazioniController {
 	@Autowired
-	PrenotazioniService ps;
+	GeneralService ps;
 
 	@GetMapping("/infoprenotazioni")
 	@ResponseStatus(HttpStatus.OK)
@@ -34,10 +38,16 @@ public class UserController {
 
 	}
 
-	@GetMapping("/prenotazioni")
+	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Postazione> cercaPrenotazioni(@RequestParam String città, @RequestParam String tipopostazione)
+	public List<Postazione> cercaPostazioni(@RequestParam String città, @RequestParam String tipopostazione)
 			throws Exception {
 		return ps.getByTipoAndCitta(tipopostazione, città);
+	}
+
+	@PostMapping("")
+	@ResponseStatus(HttpStatus.OK)
+	public Prenotazione createPrenotazione(@RequestBody PrenotazionePayload pr) throws Exception {
+		return ps.createPrenotazione(pr.getIdUtente(), pr.getIdPostazione(), pr.getDataPrenotata());
 	}
 }
